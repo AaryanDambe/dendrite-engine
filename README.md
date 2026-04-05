@@ -65,11 +65,11 @@ The bottom row is pre-seeded as all `1`s — this represents the existing anode 
 A lithium ion is modeled as a **random-walking particle**:
 1. Spawn at a random position near the top of the grid
 2. Each timestep: move randomly to one of 4 adjacent cells (Brownian motion)
-3. If the particle's current position is adjacent to any existing solid cell, it has a probability `α` (alpha) of depositing — becoming a new solid cell
+3. If the particle's current position is adjacent to any existing solid cell, it has a probability `α` (alpha) of depositing (becoming a new solid cell)
 4. If it deposits: freeze it, spawn the next particle
 5. If it walks off the boundary: kill it, spawn the next particle
 
-Repeat this for thousands of particles across hundreds of simulated cycles. The branching fractal structure that emerges is not programmed — it arises from geometry. Tips of existing crystal intercept more random walkers than valleys, so tips grow faster. This produces the needle-like morphology seen in real SEM images.
+Repeat this for thousands of particles across hundreds of simulated cycles. The branching fractal structure that emerges is not programmed, rather it arises from geometry. Tips of existing crystal intercept more random walkers than valleys, so tips grow faster. This produces the needle-like morphology seen in real SEM images.
 
 ### Phase 1 — Pure DLA
 Random walk with sticking probability = 1.0. Proof of concept. Establishes the fractal structure.
