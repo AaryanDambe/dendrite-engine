@@ -1,0 +1,15 @@
+{
+  "grid_width": 400,
+  "grid_height": 600,
+  "alpha": 0.55,
+  "charge_rate": 6,
+  "temperature_gradient": 0.50,
+  "battery_age_preset": "fresh",
+  "num_cycles": 200,
+  "ensemble_runs": 50,
+  "diffusion_coefficient": null,
+  "activation_energy": null,
+  "anode_width_mm": null,
+  "fast_charge_current_density": null,
+  "slow_charge_current_density": null
+}
