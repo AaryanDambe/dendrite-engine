@@ -1,60 +1,95 @@
 import taichi as ti
-import numpy as np
+import random
 
-# Initialize Taichi
-ti.init(arch=ti.gpu)
+ti.init(arch=ti.cpu)  # change to ti.gpu if supported
 
-# Simulation parameters
-N = 1000
-dt = 0.01
-gravity = 9.8
-damping = 0.99
+# Grid size
+N = 200
 
-# Create fields
-pos = ti.Vector.field(2, dtype=ti.f32, shape=N)
-vel = ti.Vector.field(2, dtype=ti.f32, shape=N)
+# Fields
+grid = ti.field(dtype=ti.i32, shape=(N, N))  # 0 empty, 1 occupied
 
-# Initialize particles
+# Particle properties
+max_particles = 2000
+positions = ti.Vector.field(2, dtype=ti.i32, shape=max_particles)
+active = ti.field(dtype=ti.i32, shape=max_particles)
+
+# Parameters
+stick_prob = 0.5
+E_strength = 3  # electric field bias (increase for fast charging)
+
+# Initialize electrode (bottom row)
 @ti.kernel
 def init():
-    for i in range(N):
-        pos[i] = ti.Vector([ti.random() * 0.8 + 0.1, ti.random() * 0.8 + 0.1])
-        vel[i] = ti.Vector([ti.random() * 2 - 1, ti.random() * 2 - 1])
+    for i, j in grid:
+        grid[i, j] = 0
 
-# Physics update
+    for i in range(N):
+        grid[i, 0] = 1  # seed dendrite at bottom
+
+
+# Spawn particles at top
+def spawn_particles():
+    for i in range(max_particles):
+        if active[i] == 0:
+            positions[i] = ti.Vector([random.randint(0, N - 1), N - 1])
+            active[i] = 1
+
+
+# Check if near cluster
+@ti.func
+def near_cluster(x, y):
+    found = 0
+
+    for dx, dy in ti.static([(1,0), (-1,0), (0,1), (0,-1)]):
+        nx = x + dx
+        ny = y + dy
+
+        if 0 <= nx < N and 0 <= ny < N:
+            if grid[nx, ny] == 1:
+                found = 1  # ✅ set flag instead of returning
+
+    return found
+
+
+# Simulation step
 @ti.kernel
-def update():
-    for i in range(N):
-        # Apply gravity
-        vel[i].y -= gravity * dt
-        
-        # Update position
-        pos[i] += vel[i] * dt
-        
-        # Boundary collision
-        if pos[i].x < 0.05:
-            pos[i].x = 0.05
-            vel[i].x *= -damping
-        elif pos[i].x > 0.95:
-            pos[i].x = 0.95
-            vel[i].x *= -damping
-            
-        if pos[i].y < 0.05:
-            pos[i].y = 0.05
-            vel[i].y *= -damping
-        elif pos[i].y > 0.95:
-            pos[i].y = 0.95
-            vel[i].y *= -damping
+def step():
+    for i in range(max_particles):
+        if active[i] == 1:
+            pos = positions[i]
 
-# Main loop
+            # Random walk
+            dx = ti.random(ti.i32) % 3 - 1
+            dy = ti.random(ti.i32) % 3 - 1
+
+            # Electric field bias (downward)
+            dy -= E_strength
+
+            new_x = min(max(pos[0] + dx, 0), N - 1)
+            new_y = min(max(pos[1] + dy, 0), N - 1)
+
+            # Stick condition
+            if near_cluster(new_x, new_y) == 1:
+                if ti.random() < stick_prob:
+                    grid[new_x, new_y] = 1
+                    active[i] = 0
+                    continue
+
+            positions[i] = ti.Vector([new_x, new_y])
+
+
+# Simple visualization
+gui = ti.GUI("DLA Dendrite Growth", (N, N))
+
 init()
-window = ti.GUI("Taichi Particle Simulation", res=(800, 800))
+spawn_particles()
 
-while window.running:
-    update()
-    
-    # Draw particles
-    window.clear(0x111111)
-    window.circles(pos.to_numpy(), radius=5, color=0x00FF00)
-    
-    window.show()
+while gui.running:
+    for _ in range(5):  # multiple steps per frame
+        step()
+
+    # Draw grid
+    img = grid.to_numpy().astype('float32')* 1.0
+    gui.set_image(img)
+    gui.show()
