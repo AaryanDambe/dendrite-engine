@@ -28,7 +28,7 @@ Do not spend time on these.
 
 | Parameter | Symbol | Unit | Target Range | Search Terms | Value | Source | DOI/URL | Status |
 |---|---|---|---|---|---|---|---|---|
-| Li⁺ diffusion coefficient in LiPF6 EC:DMC electrolyte at 25°C | D₀ | m²/s | 10⁻¹⁰ to 10⁻⁹ | "lithium ion diffusion coefficient LiPF6 EC DMC" |2.6 × 10⁻¹⁰m²/s at 1 M, 25 °C|Lundgren et al. (EC:DEC 1:1, galvanostatic polarization) — D decreases from 2.8×10⁻¹⁰ at 0.5 M to 2.0×10⁻¹⁰ at 1.5 M; at 1 M ≈ 2.6×10⁻¹⁰ m²/s. |10.1016/j.electacta.2015.02.090 (Lundgren); 10.1149/2.0341503jes (Valøen & Reimers) | ⬜ |
+| Li⁺ diffusion coefficient in LiPF6 EC:DMC electrolyte at 25°C | D₀ | m²/s | 10⁻¹⁰ to 10⁻⁹ | "lithium ion diffusion coefficient LiPF6 EC DMC" | ~2.6 × 10⁻¹⁰ m²/s at 1 M, 25°C (interpolated estimate); Landesfeind & Gasteiger directly measured range for EC:DMC (1:1 w:w): ~2.3–7.4 × 10⁻¹⁰ m²/s across −7.5°C to +50°C at 0.1 M | Landesfeind & Gasteiger (2019) — binary diffusion coefficient measured directly for 1 M LiPF6 in EC:DMC (1:1 w:w) across concentrations and temperatures. Lundgren et al. (2015) used EC:DEC (not EC:DMC) — values are proxies only. Valøen & Reimers (2005) measured LiPF6 in PC/EC/DMC mixture. | 10.1149/2.0571912jes (Landesfeind & Gasteiger 2019); 10.1149/2.0641503jes (Lundgren 2015, EC:DEC proxy); 10.1149/1.1872737 (Valøen & Reimers 2005) | ⬜ |
 
 ---
 
@@ -47,7 +47,7 @@ Find all three together — they are in the same datasheet.
 
 | Parameter | Symbol | Unit | Target Range | Search Terms | Value | Source | DOI/URL | Status |
 |---|---|---|---|---|---|---|---|---|
-| Cycle life to 80% capacity retention | N_rated | cycles | 300–800 | "LG M50 cycle life capacity retention" |500 cycles |LG Energy Solution INR21700 M50 Datasheet |https://www.dnkpower.com/wp-content/uploads/2019/02/LG-INR21700-M50-Datasheet.pdf | ⬜ |
+| Cycle life to 80% capacity retention | N_rated | cycles | 300–800 | "LG M50 cycle life capacity retention" |300 cycles, 500 cycles at C/3 charge and C/3 discharge between 4.2V and 2.85V |LG Energy Solution INR21700 M50 Datasheet |https://www.dnkpower.com/wp-content/uploads/2019/02/LG-INR21700-M50-Datasheet.pdf | ⬜ |
 
 ---
 
