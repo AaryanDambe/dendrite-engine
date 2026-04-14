@@ -5,7 +5,7 @@ ti.init(arch=ti.gpu)
 W, H = 200, 200
 
 grid = ti.field(dtype=ti.i32, shape=(W, H))
-stick_prob = 0.4
+stick_prob = 0.8
 # RGB pixel buffer
 pixels = ti.Vector.field(3, dtype=ti.f32, shape=(W, H))
 
