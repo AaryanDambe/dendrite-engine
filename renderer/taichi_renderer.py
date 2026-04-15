@@ -88,7 +88,7 @@ def paint():
 @ti.kernel
 
 def paint_ions():
-    particle_count[None] = 300
+    particle_count[None] = 800
 
     for i in range(500):
         particle_pos[i] = ti.Vector([
