@@ -7,9 +7,28 @@
   "battery_age_preset": "fresh",
   "num_cycles": 200,
   "ensemble_runs": 50,
+  "degradation_rate": 0.002,
+
+  "sep_factor": 0.65,
+  "edge_factor": 1.25,
+  "seed_roughness": 0.20,
+  "sei_growth_rate": 0.002,
+
   "diffusion_coefficient": null,
   "activation_energy": null,
   "anode_width_mm": null,
   "fast_charge_current_density": null,
-  "slow_charge_current_density": null
+  "slow_charge_current_density": null,
+  "delta_g0": null,
+  "surface_tension": null,
+  "symmetry_factor": null,
+  "phi_eq": null,
+  "bulk_concentration": null,
+  "sei_initial_thickness": null,
+  "sei_ionic_conductivity": null,
+  "sei_activation_energy": null,
+
+  "sand_time_seconds": null,
+  "sand_crossed_cycle_fast": null,
+  "sand_crossed_cycle_slow": null
 }
